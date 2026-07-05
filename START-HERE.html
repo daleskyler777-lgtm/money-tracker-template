@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Build your own Money Tracker — Step-by-step</title>
+<style>
+:root{
+  --bg:#f6f7f9; --panel:#ffffff; --ink:#1a1d21; --muted:#5f6672; --faint:#8a909b;
+  --line:#e6e8ec; --line2:#d7dae0;
+  --accent:#4f46e5; --accent-soft:#ecebfb; --accent-ink:#3730a3;
+  --green:#15803d; --green-soft:#e7f6ec;
+  --amber:#b45309; --amber-soft:#fdf1dd;
+  --red:#b91c1c; --red-soft:#fdecec;
+  --blue:#1d4ed8; --blue-soft:#e7effd;
+  --code-bg:#f2f3f6;
+  --radius:14px;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#0e1014; --panel:#171a20; --ink:#e9ecf1; --muted:#9aa1ac; --faint:#6b7280;
+    --line:#262b33; --line2:#333a44;
+    --accent:#8b83f5; --accent-soft:#232043; --accent-ink:#c3bdfb;
+    --green:#4ade80; --green-soft:#12261a;
+    --amber:#fbbf5a; --amber-soft:#2a2110;
+    --red:#f87171; --red-soft:#2a1414;
+    --blue:#7aa7f6; --blue-soft:#141f33;
+    --code-bg:#11141a;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px;display:grid;grid-template-columns:230px 1fr;gap:34px}
+/* Hero */
+.hero{grid-column:1 / -1;text-align:center;padding:46px 16px 26px}
+.hero h1{font-size:38px;line-height:1.15;margin:0 0 10px;font-weight:800;letter-spacing:-0.02em}
+.hero p.lead{font-size:18px;color:var(--muted);max-width:660px;margin:0 auto 20px}
+.chips{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.chip{display:inline-flex;align-items:center;gap:7px;background:var(--panel);border:1px solid var(--line);
+  border-radius:999px;padding:7px 14px;font-size:13.5px;font-weight:600;color:var(--muted)}
+/* TOC */
+nav.toc{position:sticky;top:18px;align-self:start;height:max-content;
+  border:1px solid var(--line);background:var(--panel);border-radius:var(--radius);padding:14px;font-size:14px}
+nav.toc h4{margin:2px 0 10px;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+nav.toc ol{list-style:none;margin:0;padding:0;counter-reset:t}
+nav.toc li{counter-increment:t;margin:1px 0}
+nav.toc a{display:flex;gap:9px;align-items:baseline;color:var(--muted);padding:6px 9px;border-radius:8px;font-weight:500}
+nav.toc a::before{content:counter(t,decimal-leading-zero);font-variant-numeric:tabular-nums;color:var(--faint);font-size:12px;font-weight:700;min-width:18px}
+nav.toc a:hover{background:var(--bg);text-decoration:none;color:var(--ink)}
+nav.toc a.here{background:var(--accent-soft);color:var(--accent-ink)}
+nav.toc a.here::before{color:var(--accent)}
+nav.toc .extra{margin-top:8px;padding-top:8px;border-top:1px solid var(--line);counter-reset:none}
+nav.toc .extra a::before{content:"›";font-size:14px}
+main{min-width:0;padding-bottom:60px}
+/* Sections */
+section{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  padding:26px 28px;margin:0 0 20px;scroll-margin-top:16px}
+section > h2{margin:0 0 14px;font-size:23px;font-weight:800;letter-spacing:-0.01em;display:flex;align-items:center;gap:12px}
+.snum{display:inline-flex;align-items:center;justify-content:center;flex:none;
+  width:38px;height:38px;border-radius:11px;background:var(--accent);color:#fff;font-size:18px;font-weight:800}
+section h3{font-size:16px;margin:22px 0 8px;font-weight:700}
+p{margin:10px 0}
+ul,ol{padding-left:22px;margin:10px 0}
+li{margin:7px 0}
+strong{font-weight:700}
+kbd{background:var(--code-bg);border:1px solid var(--line2);border-bottom-width:2px;border-radius:6px;
+  padding:1px 6px;font-size:13px;font-family:ui-monospace,Menlo,Consolas,monospace}
+code.inl{background:var(--code-bg);border:1px solid var(--line);border-radius:6px;padding:1px 6px;
+  font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13.5px;color:var(--accent-ink)}
+/* Callouts */
+.call{border-radius:12px;padding:13px 16px;margin:16px 0;font-size:15px;border:1px solid;display:flex;gap:11px}
+.call .ic{font-size:18px;line-height:1.5;flex:none}
+.call.tip{background:var(--blue-soft);border-color:color-mix(in srgb,var(--blue) 30%,transparent);color:var(--ink)}
+.call.warn{background:var(--amber-soft);border-color:color-mix(in srgb,var(--amber) 35%,transparent);color:var(--ink)}
+.call.danger{background:var(--red-soft);border-color:color-mix(in srgb,var(--red) 35%,transparent);color:var(--ink)}
+.call.ok{background:var(--green-soft);border-color:color-mix(in srgb,var(--green) 35%,transparent);color:var(--ink)}
+.call b{font-weight:700}
+/* Code boxes */
+.codebox{position:relative;background:var(--code-bg);border:1px solid var(--line);border-radius:10px;
+  margin:14px 0;overflow:hidden}
+.codebox pre{margin:0;padding:14px 52px 14px 16px;overflow-x:auto;font-family:ui-monospace,Menlo,Consolas,monospace;
+  font-size:13.5px;line-height:1.5;color:var(--ink);white-space:pre}
+.copy{position:absolute;top:8px;right:8px;border:1px solid var(--line2);background:var(--panel);color:var(--muted);
+  border-radius:8px;padding:5px 10px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit}
+.copy:hover{color:var(--ink);border-color:var(--accent)}
+.copy.done{color:var(--green);border-color:var(--green)}
+/* Meta grid (honest details) */
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin:6px 0 2px}
+.fact{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--bg)}
+.fact .t{font-size:13px;font-weight:800;color:var(--muted);margin:0 0 3px;display:flex;align-items:center;gap:7px}
+.fact .d{font-size:14px;margin:0;color:var(--ink)}
+/* Checklist */
+.acc{display:grid;gap:10px;margin:14px 0}
+.acc .row{display:flex;gap:12px;align-items:flex-start;border:1px solid var(--line);border-radius:12px;padding:13px 15px;background:var(--bg)}
+.acc .b{font-size:20px;flex:none}
+.acc .row div p{margin:0}
+.acc .row .h{font-weight:700}
+/* Env table */
+.tablewrap{overflow-x:auto;margin:14px 0}
+table.env{border-collapse:collapse;width:100%;font-size:14px;min-width:520px}
+table.env th,table.env td{border:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}
+table.env th{background:var(--bg);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+table.env td.name{white-space:nowrap}
+.varchip{display:inline-flex;align-items:center;gap:8px}
+.varchip code{background:var(--code-bg);border:1px solid var(--line);border-radius:6px;padding:2px 7px;
+  font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px;color:var(--accent-ink)}
+.minicopy{border:1px solid var(--line2);background:var(--panel);color:var(--faint);border-radius:6px;
+  cursor:pointer;font-size:11px;padding:2px 6px;font-family:inherit;font-weight:700}
+.minicopy:hover{color:var(--ink);border-color:var(--accent)}
+.minicopy.done{color:var(--green);border-color:var(--green)}
+/* Diagrams */
+figure{margin:18px 0;text-align:center}
+figure svg{max-width:100%;height:auto}
+figcaption{font-size:13px;color:var(--faint);margin-top:8px}
+.svg-box{fill:var(--panel);stroke:var(--line2)}
+.svg-accent{fill:var(--accent-soft);stroke:var(--accent)}
+.svg-green{fill:var(--green-soft);stroke:var(--green)}
+.svg-amber{fill:var(--amber-soft);stroke:var(--amber)}
+.svg-blue{fill:var(--blue-soft);stroke:var(--blue)}
+.svg-ink{fill:var(--ink)}
+.svg-mut{fill:var(--muted)}
+.svg-line{stroke:var(--line2)}
+.svg-astroke{stroke:var(--accent)}
+/* details */
+details{border:1px solid var(--line);border-radius:12px;margin:14px 0;background:var(--bg);overflow:hidden}
+details > summary{cursor:pointer;padding:13px 16px;font-weight:700;list-style:none}
+details > summary::-webkit-details-marker{display:none}
+details > summary::before{content:"▸ ";color:var(--accent)}
+details[open] > summary::before{content:"▾ "}
+details .body{padding:2px 16px 14px}
+.tablewrap table.tb{border-collapse:collapse;width:100%;font-size:14px;min-width:520px}
+.tablewrap table.tb th,.tablewrap table.tb td{border:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}
+.tablewrap table.tb th{background:var(--panel);font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+.foot{grid-column:1 / -1;text-align:center;color:var(--faint);font-size:13px;padding:10px 0 40px}
+.big-emoji{font-size:15px}
+@media (max-width:820px){
+  .wrap{grid-template-columns:1fr;gap:18px}
+  nav.toc{position:static;order:-1}
+  .hero h1{font-size:30px}
+  section{padding:20px 18px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <h1>💸 Build your own Money Tracker</h1>
+    <p class="lead">A shared expense tracker for you and the people you add. Type an expense in plain English — or snap a receipt — and an AI logs it to a Google Sheet you all share. Follow along to put your own copy online, <b>no coding and no installs</b>.</p>
+    <div class="chips">
+      <span class="chip">⏱️ 30–45 minutes</span>
+      <span class="chip">💵 100% free</span>
+      <span class="chip">🧑‍💻 No coding</span>
+      <span class="chip">🌐 All in your browser</span>
+    </div>
+  </header>
+
+  <nav class="toc" id="toc">
+    <h4>The steps</h4>
+    <ol>
+      <li><a href="#s1">Unzip the folder</a></li>
+      <li><a href="#s2">Create your Sheet</a></li>
+      <li><a href="#s3">Get an AI key</a></li>
+      <li><a href="#s4">Create the robot</a></li>
+      <li><a href="#s5">Share the Sheet</a></li>
+      <li><a href="#s6">Upload to GitHub</a></li>
+      <li><a href="#s7">Deploy on Vercel</a></li>
+      <li><a href="#s8">Open &amp; share</a></li>
+    </ol>
+    <div class="extra">
+      <a href="#how">How it works</a>
+      <a href="#trouble">Troubleshooting</a>
+      <a href="#faq">FAQ</a>
+    </div>
+  </nav>
+
+  <main>
+
+    <section id="how">
+      <h2>What you'll end up with</h2>
+      <p>A private web app on its own link — add it to your phone's home screen and it feels like a real app. Only people who know your <b>PIN</b> can open it. You'll each tap your name, then type things like <code class="inl">$43 Costco groceries</code> or <code class="inl">spent 12 bucks on coffee</code>, and it lands in your shared sheet with a running monthly total.</p>
+
+      <h3>How it works, in plain English</h3>
+      <p>When you type an expense and tap the button, here's the journey — you never see any of it, but it explains the accounts you're about to set up:</p>
+      <figure>
+        <svg viewBox="0 0 640 250" role="img" aria-label="Your phone talks to your app on Vercel, which uses Gemini AI to read the expense and Google Sheets to store it, then sends the result back to your phone.">
+          <rect class="svg-box" x="20" y="95" width="120" height="60" rx="12" stroke-width="1.5"/>
+          <text class="svg-ink" x="80" y="120" text-anchor="middle" font-size="14" font-weight="700">📱 Your phone</text>
+          <text class="svg-mut" x="80" y="140" text-anchor="middle" font-size="11">type &amp; tap</text>
+
+          <rect class="svg-accent" x="230" y="90" width="150" height="70" rx="12" stroke-width="1.5"/>
+          <text class="svg-ink" x="305" y="116" text-anchor="middle" font-size="14" font-weight="700">Your app</text>
+          <text class="svg-mut" x="305" y="135" text-anchor="middle" font-size="11">hosted free on Vercel</text>
+
+          <rect class="svg-amber" x="470" y="30" width="150" height="60" rx="12" stroke-width="1.5"/>
+          <text class="svg-ink" x="545" y="55" text-anchor="middle" font-size="13" font-weight="700">🤖 Gemini AI</text>
+          <text class="svg-mut" x="545" y="73" text-anchor="middle" font-size="11">reads it</text>
+
+          <rect class="svg-green" x="470" y="160" width="150" height="60" rx="12" stroke-width="1.5"/>
+          <text class="svg-ink" x="545" y="185" text-anchor="middle" font-size="13" font-weight="700">📊 Google Sheets</text>
+          <text class="svg-mut" x="545" y="203" text-anchor="middle" font-size="11">stores it</text>
+
+          <line class="svg-astroke" x1="140" y1="125" x2="228" y2="125" stroke-width="2" marker-end="url(#ar)"/>
+          <line class="svg-astroke" x1="380" y1="112" x2="468" y2="70" stroke-width="2" marker-end="url(#ar)"/>
+          <line class="svg-astroke" x1="380" y1="138" x2="468" y2="185" stroke-width="2" marker-end="url(#ar)"/>
+          <defs>
+            <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+              <path d="M0,0 L9,4.5 L0,9 Z" fill="var(--accent)"/>
+            </marker>
+          </defs>
+        </svg>
+        <figcaption>One account gives the app an AI brain (Gemini), one gives it a notebook (Sheets), and two put it online (GitHub + Vercel).</figcaption>
+      </figure>
+
+      <h3>Before you start — the honest details</h3>
+      <div class="facts">
+        <div class="fact"><p class="t">⏱️ Time</p><p class="d">About 30–45 minutes, mostly clicking through account setup.</p></div>
+        <div class="fact"><p class="t">💵 Cost</p><p class="d">Free. Every service here has a generous free tier. No credit card needed.</p></div>
+        <div class="fact"><p class="t">🔒 Security</p><p class="d">Protected by a shared PIN — fine for a small trusted group, but convenience-level. Don't reuse an important PIN.</p></div>
+        <div class="fact"><p class="t">🤖 Privacy</p><p class="d">Text &amp; photos go to Gemini to be read; on the free tier Google may use them to improve models. Photos aren't stored by the app.</p></div>
+      </div>
+
+      <h3>Accounts you'll need (all free)</h3>
+      <div class="acc">
+        <div class="row"><span class="b">🔵</span><div><p class="h">A Google account</p><p>You almost certainly have one (Gmail counts). Covers the AI key, the sheet, and the robot login.</p></div></div>
+        <div class="row"><span class="b">🐙</span><div><p class="h">A GitHub account</p><p>A free home for the code. Sign up at <a href="https://github.com">github.com</a>.</p></div></div>
+        <div class="row"><span class="b">▲</span><div><p class="h">A Vercel account</p><p>The free host that puts your app online. Sign up at <a href="https://vercel.com">vercel.com</a> with your GitHub account (one click).</p></div></div>
+      </div>
+      <div class="call tip"><span class="ic">💡</span><div>Create the GitHub and Vercel accounts now if you don't have them, then come back and start Step 1.</div></div>
+    </section>
+
+    <section id="s1">
+      <h2><span class="snum">1</span> Unzip the folder</h2>
+      <p>If you're reading this file, you likely already did! You should have a folder called <code class="inl">money-tracker</code> containing a file named <code class="inl">package.json</code> and folders named <code class="inl">app</code>, <code class="inl">lib</code>, and <code class="inl">scripts</code>.</p>
+      <ul>
+        <li>Put this folder somewhere safe, like your <b>Desktop</b>.</li>
+        <li><b>Don't rename or delete anything inside it</b> — you'll upload the whole folder to GitHub in Step 6.</li>
+      </ul>
+      <div class="call ok"><span class="ic">✅</span><div>That's the whole step. You never need to open or edit any of the code files.</div></div>
+    </section>
+
+    <section id="s2">
+      <h2><span class="snum">2</span> Create your Google Sheet</h2>
+      <p>This is where your expenses get stored.</p>
+      <ol>
+        <li>Go to <a href="https://sheets.new">sheets.new</a> — this instantly makes a new blank sheet.</li>
+        <li>Name it: click <b>"Untitled spreadsheet"</b> at the top-left and type something like <code class="inl">Expenses</code>.</li>
+        <li><b>Add the header row.</b> Click the very first cell, <b>A1</b>, and paste this exact line — it spreads across the first six cells:</li>
+      </ol>
+      <div class="codebox">
+        <button class="copy" data-target="hdr">Copy</button>
+        <pre id="hdr" data-copy="Date&#9;Person&#9;Amount&#9;Merchant&#9;Category&#9;Notes">Date    Person    Amount    Merchant    Category    Notes</pre>
+      </div>
+      <div class="call warn"><span class="ic">💡</span><div>The gaps are <b>Tab</b> characters. The <b>Copy</b> button copies them correctly — just paste into cell <b>A1</b>. If everything lands in one cell instead, press <kbd>Ctrl</kbd>+<kbd>Z</kbd> and type each word into A1, B1, C1… pressing <kbd>Tab</kbd> between them.</div></div>
+      <p>Your top row should read: <b>Date | Person | Amount | Merchant | Category | Notes</b></p>
+
+      <h3>Copy your Sheet ID</h3>
+      <p>Look at the web address at the top of your browser. The long jumble in the middle is your <b>Sheet ID</b> — select just that part (between <code class="inl">/d/</code> and <code class="inl">/edit</code>) and copy it somewhere safe. You'll need it in Step 7.</p>
+      <figure>
+        <svg viewBox="0 0 640 90" role="img" aria-label="In the spreadsheet URL, the Sheet ID is the long segment between slash-d-slash and slash-edit.">
+          <text x="10" y="34" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="13.5">
+            <tspan class="svg-mut">https://docs.google.com/spreadsheets/d/</tspan><tspan class="svg-ink" font-weight="800">1AbCd…LongJumble…xyz</tspan><tspan class="svg-mut">/edit</tspan>
+          </text>
+          <rect class="svg-accent" x="266" y="18" width="196" height="24" rx="6" fill-opacity="0.25" stroke-width="1.5"/>
+          <line class="svg-astroke" x1="364" y1="48" x2="364" y2="66" stroke-width="1.5"/>
+          <text class="svg-ink" x="364" y="82" text-anchor="middle" font-size="12" font-weight="700">this is your GOOGLE_SHEET_ID</text>
+        </svg>
+      </figure>
+      <p>Keep this sheet's browser tab open — you'll share it in Step 5.</p>
+    </section>
+
+    <section id="s3">
+      <h2><span class="snum">3</span> Get a free AI key (Google Gemini)</h2>
+      <p>This gives your app its brain for reading expenses.</p>
+      <ol>
+        <li>Go to <a href="https://aistudio.google.com">aistudio.google.com</a> and sign in with your Google account.</li>
+        <li>Click <b>"Get API key"</b> (a key icon in the left menu).</li>
+        <li>Click <b>"Create API key"</b>, then choose <b>"Create API key in new project"</b>.</li>
+        <li>A long key appears — it may start with <code class="inl">AIza</code> or <code class="inl">AQ.</code> (both are valid). Click <b>Copy</b> and save it. This is your <code class="inl">GEMINI_API_KEY</code>.</li>
+      </ol>
+      <div class="call warn"><span class="ic">🔑</span><div>Treat this key like a password — anyone with it can use your free AI quota.</div></div>
+    </section>
+
+    <section id="s4">
+      <h2><span class="snum">4</span> Create a "robot" account for the sheet</h2>
+      <p>Your app can't log into Google as <i>you</i>. Instead it uses a <b>service account</b> — a robot identity allowed to write to just your one sheet. This looks technical but it's only clicking. Follow it exactly.</p>
+      <ol>
+        <li>Go to <a href="https://console.cloud.google.com">console.cloud.google.com</a> and sign in. If asked to accept terms, do so — you will <b>not</b> be charged and don't need any free trial.</li>
+        <li><b>Pick the right project.</b> At the very top, next to "Google Cloud", click the project dropdown and choose the project made in Step 3 (often named <i>"Gemini API"</i> or <i>"My First Project"</i>). Any project works.</li>
+        <li><b>Turn on the Sheets API:</b> in the top search bar type <code class="inl">Google Sheets API</code>, click the result, then click the blue <b>"Enable"</b> button.</li>
+        <li><b>Create the service account:</b> search <code class="inl">Service Accounts</code> (under "IAM &amp; Admin") → <b>"+ Create service account"</b> → name it <code class="inl">expense-bot</code> → <b>"Create and continue"</b> → <b>skip</b> the optional access steps → <b>"Continue"</b> → <b>"Done"</b>.</li>
+        <li><b>Create its key file:</b> click your new <code class="inl">expense-bot</code> account → the <b>"Keys"</b> tab → <b>"Add key" → "Create new key"</b> → choose <b>JSON</b> → <b>"Create"</b>. A <code class="inl">.json</code> file downloads.</li>
+        <li><b>Open that downloaded file</b> in any text editor (Notepad, TextEdit, or your browser). Find and copy these two values:</li>
+      </ol>
+      <div class="call danger"><span class="ic">🔒</span><div>That JSON file is like a password. Keep it private, and delete it once you've finished Step 7.</div></div>
+      <figure>
+        <svg viewBox="0 0 620 210" role="img" aria-label="The client_email field becomes GOOGLE_SERVICE_ACCOUNT_EMAIL and the private_key field becomes GOOGLE_PRIVATE_KEY. The sheet URL becomes GOOGLE_SHEET_ID and the Gemini key becomes GEMINI_API_KEY.">
+          <rect class="svg-box" x="14" y="20" width="230" height="170" rx="12" stroke-width="1.5"/>
+          <text class="svg-mut" x="30" y="44" font-size="12" font-weight="700">📄 downloaded JSON file</text>
+          <text class="svg-ink" x="30" y="74" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="12">"client_email":</text>
+          <text class="svg-ink" x="30" y="120" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="12">"private_key":</text>
+          <text class="svg-mut" x="30" y="150" font-size="11">＋ your Sheet URL</text>
+          <text class="svg-mut" x="30" y="172" font-size="11">＋ your Gemini key</text>
+
+          <line class="svg-astroke" x1="244" y1="70" x2="356" y2="60" stroke-width="2" marker-end="url(#ar2)"/>
+          <line class="svg-astroke" x1="244" y1="116" x2="356" y2="105" stroke-width="2" marker-end="url(#ar2)"/>
+          <line class="svg-line" x1="244" y1="150" x2="356" y2="150" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#ar2)"/>
+          <line class="svg-line" x1="244" y1="172" x2="356" y2="195" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#ar2)"/>
+
+          <text class="svg-ink" x="360" y="52" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="11.5" font-weight="700">GOOGLE_SERVICE_ACCOUNT_EMAIL</text>
+          <text class="svg-ink" x="360" y="98" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="11.5" font-weight="700">GOOGLE_PRIVATE_KEY</text>
+          <text class="svg-mut" x="360" y="150" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="11.5">GOOGLE_SHEET_ID</text>
+          <text class="svg-mut" x="360" y="196" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="11.5">GEMINI_API_KEY</text>
+          <defs>
+            <marker id="ar2" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+              <path d="M0,0 L9,4.5 L0,9 Z" fill="var(--accent)"/>
+            </marker>
+          </defs>
+        </svg>
+        <figcaption>Which value becomes which setting in Step 7. Keep this open as you go.</figcaption>
+      </figure>
+      <ul>
+        <li><code class="inl">"client_email"</code> — ends in <code class="inl">…iam.gserviceaccount.com</code> → your <code class="inl">GOOGLE_SERVICE_ACCOUNT_EMAIL</code>.</li>
+        <li><code class="inl">"private_key"</code> — a long block starting <code class="inl">-----BEGIN PRIVATE KEY-----</code>. Copy everything between the quotation marks, including the BEGIN/END lines → your <code class="inl">GOOGLE_PRIVATE_KEY</code>.</li>
+      </ul>
+    </section>
+
+    <section id="s5">
+      <h2><span class="snum">5</span> Share your sheet with the robot</h2>
+      <p>The robot exists but can't see your sheet yet. Let's fix that.</p>
+      <div class="call danger"><span class="ic">⚠️</span><div><b>This is the single most-forgotten step.</b> Skip it and the app can't save or read anything (you'll get a "permission denied" error).</div></div>
+      <ol>
+        <li>Go back to your Google Sheet from Step 2.</li>
+        <li>Click the green <b>"Share"</b> button (top-right).</li>
+        <li>Paste the robot's email — your <code class="inl">GOOGLE_SERVICE_ACCOUNT_EMAIL</code> ending in <code class="inl">…iam.gserviceaccount.com</code>.</li>
+        <li>Set its role to <b>"Editor"</b> (not Viewer).</li>
+        <li><b>Uncheck "Notify people"</b> — the robot has no inbox.</li>
+        <li>Click <b>"Share"</b> / <b>"Send"</b>.</li>
+      </ol>
+    </section>
+
+    <section id="s6">
+      <h2><span class="snum">6</span> Put the code on GitHub</h2>
+      <p>Upload this folder to GitHub so Vercel can find it — all in your browser.</p>
+      <figure>
+        <svg viewBox="0 0 560 90" role="img" aria-label="You upload the folder to GitHub once; Vercel then builds and hosts it.">
+          <rect class="svg-box" x="10" y="24" width="150" height="46" rx="11" stroke-width="1.5"/>
+          <text class="svg-ink" x="85" y="52" text-anchor="middle" font-size="13" font-weight="700">🐙 GitHub</text>
+          <line class="svg-astroke" x1="160" y1="47" x2="228" y2="47" stroke-width="2" marker-end="url(#ar3)"/>
+          <text class="svg-mut" x="194" y="38" text-anchor="middle" font-size="10">imports</text>
+          <rect class="svg-accent" x="230" y="24" width="150" height="46" rx="11" stroke-width="1.5"/>
+          <text class="svg-ink" x="305" y="52" text-anchor="middle" font-size="13" font-weight="700">▲ Vercel</text>
+          <line class="svg-astroke" x1="380" y1="47" x2="448" y2="47" stroke-width="2" marker-end="url(#ar3)"/>
+          <text class="svg-mut" x="414" y="38" text-anchor="middle" font-size="10">builds</text>
+          <rect class="svg-green" x="450" y="24" width="100" height="46" rx="11" stroke-width="1.5"/>
+          <text class="svg-ink" x="500" y="52" text-anchor="middle" font-size="13" font-weight="700">🌐 Live</text>
+          <defs><marker id="ar3" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="var(--accent)"/></marker></defs>
+        </svg>
+      </figure>
+      <ol>
+        <li>Go to <a href="https://github.com/new">github.com/new</a> (sign in if needed).</li>
+        <li><b>Repository name:</b> <code class="inl">money-tracker</code>.</li>
+        <li>Set it to <b>Private</b>.</li>
+        <li><b>Leave every other box unchecked</b> (no README, no .gitignore, no license) — the upload needs an empty repository.</li>
+        <li>Click <b>"Create repository"</b>.</li>
+        <li>On the next page, click the small link <b>"uploading an existing file"</b>.</li>
+        <li>Open your <code class="inl">money-tracker</code> folder, select <b>everything inside it</b> (<kbd>Ctrl</kbd>/<kbd>Cmd</kbd>+<kbd>A</kbd>) — the <code class="inl">app</code>, <code class="inl">lib</code>, <code class="inl">scripts</code> folders and the loose files — and <b>drag them all</b> onto the upload area.</li>
+        <li>Scroll down and click the green <b>"Commit changes"</b>.</li>
+      </ol>
+      <div class="call tip"><span class="ic">💡</span><div>Give the upload a moment — it keeps the folder structure. You should see <code class="inl">app/</code>, <code class="inl">lib/</code>, <code class="inl">scripts/</code>, and <code class="inl">package.json</code> in the list. The tutorial files ride along harmlessly.</div></div>
+    </section>
+
+    <section id="s7">
+      <h2><span class="snum">7</span> Put it online with Vercel</h2>
+      <p>Now it becomes a real, live website.</p>
+      <ol>
+        <li>Go to <a href="https://vercel.com/new">vercel.com/new</a>. Sign in with <b>"Continue with GitHub"</b>, same account as Step 6.</li>
+        <li>Find <code class="inl">money-tracker</code> in your repo list and click <b>"Import"</b>. (Not listed? Click "Adjust GitHub App Permissions" and grant access.)</li>
+        <li><b>Before clicking Deploy</b>, expand <b>"Environment Variables"</b> and add each row below — type the <b>Name</b>, paste the <b>Value</b>, click Add, repeat.</li>
+      </ol>
+      <div class="tablewrap">
+        <table class="env">
+          <thead><tr><th>Name (click to copy)</th><th>Value — where it comes from</th></tr></thead>
+          <tbody>
+            <tr><td class="name"><span class="varchip"><code>APP_PIN</code><button class="minicopy" data-text="APP_PIN">copy</button></span></td><td>A number <i>you</i> pick, e.g. <code class="inl">2468</code>. The PIN you'll both type to open the app.</td></tr>
+            <tr><td class="name"><span class="varchip"><code>GEMINI_API_KEY</code><button class="minicopy" data-text="GEMINI_API_KEY">copy</button></span></td><td>The key from <b>Step 3</b> (it may start with <code class="inl">AIza</code> or <code class="inl">AQ.</code>).</td></tr>
+            <tr><td class="name"><span class="varchip"><code>GOOGLE_SERVICE_ACCOUNT_EMAIL</code><button class="minicopy" data-text="GOOGLE_SERVICE_ACCOUNT_EMAIL">copy</button></span></td><td>The <code class="inl">…iam.gserviceaccount.com</code> email from <b>Step 4</b>.</td></tr>
+            <tr><td class="name"><span class="varchip"><code>GOOGLE_PRIVATE_KEY</code><button class="minicopy" data-text="GOOGLE_PRIVATE_KEY">copy</button></span></td><td>The long <code class="inl">-----BEGIN PRIVATE KEY-----…</code> block from <b>Step 4</b>. Paste exactly as-is (multiple lines are fine).</td></tr>
+            <tr><td class="name"><span class="varchip"><code>GOOGLE_SHEET_ID</code><button class="minicopy" data-text="GOOGLE_SHEET_ID">copy</button></span></td><td>The long ID from your sheet's URL, <b>Step 2</b>.</td></tr>
+            <tr><td class="name"><span class="varchip"><code>SHEET_NAME</code><button class="minicopy" data-text="SHEET_NAME">copy</button></span></td><td><code class="inl">Sheet1</code> — the tab name at the bottom-left of your sheet. Leave as <code class="inl">Sheet1</code> unless you renamed the tab.</td></tr>
+            <tr><td class="name"><span class="varchip"><code>PEOPLE</code><button class="minicopy" data-text="PEOPLE">copy</button></span></td><td>Everyone's names, separated by commas — e.g. <code class="inl">Alex,Sam</code> or <code class="inl">Alex,Sam,Jordan</code>. <b>Add as many as you like</b>; the first name is the default.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="call tip"><span class="ic">💡</span><div>You can skip <code class="inl">GEMINI_MODEL</code> — the app defaults to <code class="inl">gemini-2.5-flash</code>, which is free and fast.</div></div>
+      <ol start="4">
+        <li>Once they're all added, click the big <b>"Deploy"</b> button.</li>
+        <li>Wait 1–2 minutes. When it's done you'll see confetti 🎉 and a link like <code class="inl">money-tracker-xxxx.vercel.app</code>. Click <b>"Continue to Dashboard"</b> — your link is shown under <b>"Domains"</b>.</li>
+      </ol>
+    </section>
+
+    <section id="s8">
+      <h2><span class="snum">8</span> Open it and share it</h2>
+      <ol>
+        <li>Open your <code class="inl">…vercel.app</code> link — on your computer or straight on your phone.</li>
+        <li>Type the <b>PIN</b> you chose (<code class="inl">APP_PIN</code>) and tap <b>Unlock</b>.</li>
+        <li>Tap your name at the top so entries are attributed to you (remembered on your device).</li>
+        <li>Try it: type <code class="inl">12 coffee</code> and tap <b>Log expense</b>. Check that a row appears in your Google Sheet and the "This Month" total updates.</li>
+        <li><b>Add it to your home screen:</b> iPhone (Safari) → Share icon → "Add to Home Screen". Android (Chrome) → ⋮ menu → "Add to Home screen".</li>
+        <li><b>Send the link and PIN</b> to the other person so they can do the same — they just tap <i>their</i> name once.</li>
+      </ol>
+      <div class="call ok"><span class="ic">🎉</span><div><b>You're done — you built and shipped a real web app.</b></div></div>
+    </section>
+
+    <section id="trouble">
+      <h2>Troubleshooting</h2>
+      <p>The app usually tells you what's wrong in a red box. Match it here:</p>
+      <details>
+        <summary>See the symptom → fix table</summary>
+        <div class="body tablewrap">
+          <table class="tb">
+            <thead><tr><th>What you see</th><th>Fix</th></tr></thead>
+            <tbody>
+              <tr><td><b>"permission denied" / 403</b></td><td>The sheet isn't shared with the robot. Redo <b>Step 5</b> (share as <b>Editor</b>). Also confirm the Sheets API is enabled (<b>Step 4.3</b>).</td></tr>
+              <tr><td><b>"private key" / "not a valid private key"</b></td><td>The <code class="inl">GOOGLE_PRIVATE_KEY</code> got mangled. In Vercel → Settings → Environment Variables, re-paste the whole block including the BEGIN/END lines, then redeploy.</td></tr>
+              <tr><td><b>"Spreadsheet not found" / 404</b></td><td>Wrong <code class="inl">GOOGLE_SHEET_ID</code>. Recopy just the middle of the sheet URL (<b>Step 2</b>), update Vercel, redeploy.</td></tr>
+              <tr><td><b>"rate limit" / 429</b></td><td>Hit Gemini's free per-minute limit. Wait a minute and try again.</td></tr>
+              <tr><td><b>Totals show $0 / empty</b></td><td>Make sure row 1 is the headers (<b>Step 2</b>) and expenses are below. The summary only counts the <b>current month</b> (Pacific time).</td></tr>
+              <tr><td><b>Shows "Alex / Sam"</b></td><td>You didn't set <code class="inl">PEOPLE</code> in Vercel, or misspelled it. Fix (comma-separated names) and redeploy.</td></tr>
+              <tr><td><b>"Wrong PIN" but it's right</b></td><td>Check <code class="inl">APP_PIN</code> in Vercel for stray spaces. Env changes need a redeploy.</td></tr>
+            </tbody>
+          </table>
+          <p style="margin-top:14px"><b>How to redeploy:</b> Vercel → your project → <b>Deployments</b> tab → <b>⋯</b> on the most recent → <b>Redeploy</b>. Environment-variable changes only apply to new deployments.</p>
+        </div>
+      </details>
+    </section>
+
+    <section id="faq">
+      <h2>Frequently asked</h2>
+      <h3>Is it really free?</h3>
+      <p>Yes. Vercel's Hobby plan, Google Sheets, and Gemini's free tier all cost nothing at this scale, and none of the steps ask for a credit card.</p>
+      <h3>How many people can use it?</h3>
+      <p>As many as you list in the <code class="inl">PEOPLE</code> variable — two, three, or more. Everyone shares one link and PIN, and each person taps their own name. To add someone later, edit <code class="inl">PEOPLE</code> in Vercel and redeploy.</p>
+      <h3>Can I edit the sheet by hand?</h3>
+      <p>Absolutely — add, fix, or delete rows directly and the totals follow. Keep dates as <code class="inl">YYYY-MM-DD</code> (or real date cells).</p>
+      <h3>Where are my receipt photos stored?</h3>
+      <p>Nowhere. They're sent to the AI to be read, then discarded. Only the resulting text is saved.</p>
+
+      <details>
+        <summary>Advanced (optional) — run it on your own computer</summary>
+        <div class="body">
+          <p><i>You don't need this for the steps above.</i> If you're comfortable with a terminal:</p>
+          <ol>
+            <li>Install <a href="https://nodejs.org">Node.js</a> (version 20+).</li>
+            <li>Copy <code class="inl">.env.example</code> to a new file named <code class="inl">.env.local</code> and fill in the same values from Step 7.</li>
+            <li>Run <code class="inl">npm install</code>, then <code class="inl">npm run setup:sheet</code> (writes the header row for you), then <code class="inl">npm run dev</code>, and open <code class="inl">http://localhost:3000</code>.</li>
+          </ol>
+        </div>
+      </details>
+    </section>
+
+  </main>
+
+  <footer class="foot">Built with Next.js, Google Gemini, Google Sheets, and Vercel. · This guide works offline — no internet needed to read it.</footer>
+</div>
+
+<script>
+(function(){
+  function flash(btn, label){
+    var old = btn.textContent; btn.textContent = label; btn.classList.add('done');
+    setTimeout(function(){ btn.textContent = old; btn.classList.remove('done'); }, 1400);
+  }
+  function copyText(text, btn, label){
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){ flash(btn,label); }, function(){ fallback(text,btn,label); });
+    } else { fallback(text,btn,label); }
+  }
+  function fallback(text, btn, label){
+    var ta=document.createElement('textarea'); ta.value=text; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.select();
+    try{ document.execCommand('copy'); flash(btn,label); }catch(e){}
+    document.body.removeChild(ta);
+  }
+  document.querySelectorAll('.copy').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var el=document.getElementById(btn.dataset.target);
+      var text=(el.dataset.copy!==undefined)?el.dataset.copy:el.textContent;
+      copyText(text, btn, 'Copied!');
+    });
+  });
+  document.querySelectorAll('.minicopy').forEach(function(btn){
+    btn.addEventListener('click', function(){ copyText(btn.dataset.text, btn, '✓'); });
+  });
+  // Scrollspy for the table of contents
+  var links=[].slice.call(document.querySelectorAll('nav.toc a'));
+  var map={}; links.forEach(function(a){ map[a.getAttribute('href').slice(1)]=a; });
+  var secs=[].slice.call(document.querySelectorAll('section[id]'));
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        links.forEach(function(a){a.classList.remove('here');});
+        if(map[e.target.id]) map[e.target.id].classList.add('here');
+      }
+    });
+  }, {rootMargin:'-20% 0px -70% 0px'});
+  secs.forEach(function(s){ obs.observe(s); });
+})();
+</script>
+</body>
+</html>
