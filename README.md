@@ -236,6 +236,13 @@ Now tap:
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fdaleskyler777-lgtm%2Fmoney-tracker-template&env=APP_PIN%2CGEMINI_API_KEY%2CGOOGLE_SERVICE_ACCOUNT_EMAIL%2CGOOGLE_PRIVATE_KEY%2CGOOGLE_SHEET_ID%2CSHEET_NAME%2CPEOPLE&envDescription=Get%20these%20values%20from%20the%20setup%20guide%20in%20the%20README%20(Steps%201-3)&envLink=https%3A%2F%2Fgithub.com%2Fdaleskyler777-lgtm%2Fmoney-tracker-template%23environment-variables&project-name=money-tracker&repository-name=money-tracker)
 
+The button copies this project's code: **[github.com/daleskyler777-lgtm/money-tracker-template](https://github.com/daleskyler777-lgtm/money-tracker-template)**
+
+> 🐙 **Button not working, or want to look at the code first?** Open the repo above
+> and tap the green **"Use this template"** button to make your own copy on GitHub,
+> then import it at [vercel.com/new](https://vercel.com/new) and add the same
+> variables from the table below.
+
 1. **Sign in with GitHub** if asked (same account from "Before you start").
 2. Vercel offers to create a new repository for your copy of the code — the name
    is prefilled, you can leave it as-is. Confirm it.
@@ -262,17 +269,6 @@ Now tap:
 5. Wait 1–2 minutes while Vercel builds it. When it's done you'll see confetti 🎉 and a
    link like **`money-tracker-xxxx.vercel.app`**. Tap **"Continue to Dashboard"**,
    and your link is shown under **"Domains"**.
-
-<details>
-<summary>Prefer to review the code on GitHub first, or use it without the Deploy button?</summary>
-
-You can also tap **"Use this template"** on the
-[template repository](https://github.com/daleskyler777-lgtm/money-tracker-template)
-to create your own copy on GitHub first, then go to
-[vercel.com/new](https://vercel.com/new), import that new repository, and fill in
-the same environment variables from the table above before deploying.
-
-</details>
 
 ---
 
