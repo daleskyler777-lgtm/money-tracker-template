@@ -151,26 +151,24 @@ details .body{padding:2px 16px 14px}
 
   <header class="hero">
     <h1>💸 Build your own Money Tracker</h1>
-    <p class="lead">A shared expense tracker for you and the people you add. Type an expense in plain English — or snap a receipt — and an AI logs it to a Google Sheet you all share. Follow along to put your own copy online, <b>no coding and no installs</b>.</p>
+    <p class="lead">A shared expense tracker for you and the people you add. Type an expense in plain English — or snap a receipt — and an AI logs it to a Google Sheet you all share. Follow along to put your own copy online, <b>no coding, no installs, no computer required</b>.</p>
     <div class="chips">
-      <span class="chip">⏱️ 30–45 minutes</span>
+      <span class="chip">⏱️ 20–30 minutes</span>
       <span class="chip">💵 100% free</span>
       <span class="chip">🧑‍💻 No coding</span>
-      <span class="chip">🌐 All in your browser</span>
+      <span class="chip">📱 Works entirely from your phone</span>
     </div>
   </header>
 
   <nav class="toc" id="toc">
     <h4>The steps</h4>
     <ol>
-      <li><a href="#s1">Unzip the folder</a></li>
-      <li><a href="#s2">Create your Sheet</a></li>
-      <li><a href="#s3">Get an AI key</a></li>
-      <li><a href="#s4">Create the robot</a></li>
-      <li><a href="#s5">Share the Sheet</a></li>
-      <li><a href="#s6">Upload to GitHub</a></li>
-      <li><a href="#s7">Deploy on Vercel</a></li>
-      <li><a href="#s8">Open &amp; share</a></li>
+      <li><a href="#s1">Create your Sheet</a></li>
+      <li><a href="#s2">Get an AI key</a></li>
+      <li><a href="#s3">Create the robot</a></li>
+      <li><a href="#s4">Share the Sheet</a></li>
+      <li><a href="#s5">Deploy your app</a></li>
+      <li><a href="#s6">Open &amp; share</a></li>
     </ol>
     <div class="extra">
       <a href="#how">How it works</a>
@@ -214,12 +212,12 @@ details .body{padding:2px 16px 14px}
             </marker>
           </defs>
         </svg>
-        <figcaption>One account gives the app an AI brain (Gemini), one gives it a notebook (Sheets), and two put it online (GitHub + Vercel).</figcaption>
+        <figcaption>One account gives the app an AI brain (Gemini), one gives it a notebook (Sheets), and the last one puts it online (Vercel, which creates your GitHub copy for you automatically).</figcaption>
       </figure>
 
       <h3>Before you start — the honest details</h3>
       <div class="facts">
-        <div class="fact"><p class="t">⏱️ Time</p><p class="d">About 30–45 minutes, mostly clicking through account setup.</p></div>
+        <div class="fact"><p class="t">⏱️ Time</p><p class="d">About 20–30 minutes, mostly clicking through account setup.</p></div>
         <div class="fact"><p class="t">💵 Cost</p><p class="d">Free. Every service here has a generous free tier. No credit card needed.</p></div>
         <div class="fact"><p class="t">🔒 Security</p><p class="d">Protected by a shared PIN — fine for a small trusted group, but convenience-level. Don't reuse an important PIN.</p></div>
         <div class="fact"><p class="t">🤖 Privacy</p><p class="d">Text &amp; photos go to Gemini to be read; on the free tier Google may use them to improve models. Photos aren't stored by the app.</p></div>
@@ -228,24 +226,14 @@ details .body{padding:2px 16px 14px}
       <h3>Accounts you'll need (all free)</h3>
       <div class="acc">
         <div class="row"><span class="b">🔵</span><div><p class="h">A Google account</p><p>You almost certainly have one (Gmail counts). Covers the AI key, the sheet, and the robot login.</p></div></div>
-        <div class="row"><span class="b">🐙</span><div><p class="h">A GitHub account</p><p>A free home for the code. Sign up at <a href="https://github.com">github.com</a>.</p></div></div>
-        <div class="row"><span class="b">▲</span><div><p class="h">A Vercel account</p><p>The free host that puts your app online. Sign up at <a href="https://vercel.com">vercel.com</a> with your GitHub account (one click).</p></div></div>
+        <div class="row"><span class="b">🐙</span><div><p class="h">A GitHub account</p><p>Sign up at <a href="https://github.com">github.com</a> — right from your phone's browser. You won't upload or manage any files there; Vercel creates your copy of the code for you in Step 5.</p></div></div>
+        <div class="row"><span class="b">▲</span><div><p class="h">A Vercel account</p><p>The free host that puts your app online. Sign up at <a href="https://vercel.com">vercel.com</a> with your GitHub account (one tap).</p></div></div>
       </div>
-      <div class="call tip"><span class="ic">💡</span><div>Create the GitHub and Vercel accounts now if you don't have them, then come back and start Step 1.</div></div>
+      <div class="call tip"><span class="ic">💡</span><div>Create the GitHub and Vercel accounts now if you don't have them, then come back and start Step 1. <b>The short version:</b> collect four values below, then tap one Deploy button in Step 5 and paste them in.</div></div>
     </section>
 
     <section id="s1">
-      <h2><span class="snum">1</span> Unzip the folder</h2>
-      <p>If you're reading this file, you likely already did! You should have a folder called <code class="inl">money-tracker</code> containing a file named <code class="inl">package.json</code> and folders named <code class="inl">app</code>, <code class="inl">lib</code>, and <code class="inl">scripts</code>.</p>
-      <ul>
-        <li>Put this folder somewhere safe, like your <b>Desktop</b>.</li>
-        <li><b>Don't rename or delete anything inside it</b> — you'll upload the whole folder to GitHub in Step 6.</li>
-      </ul>
-      <div class="call ok"><span class="ic">✅</span><div>That's the whole step. You never need to open or edit any of the code files.</div></div>
-    </section>
-
-    <section id="s2">
-      <h2><span class="snum">2</span> Create your Google Sheet</h2>
+      <h2><span class="snum">1</span> Create your Google Sheet</h2>
       <p>This is where your expenses get stored.</p>
       <ol>
         <li>Go to <a href="https://sheets.new">sheets.new</a> — this instantly makes a new blank sheet.</li>
@@ -260,7 +248,7 @@ details .body{padding:2px 16px 14px}
       <p>Your top row should read: <b>Date | Person | Amount | Merchant | Category | Notes</b></p>
 
       <h3>Copy your Sheet ID</h3>
-      <p>Look at the web address at the top of your browser. The long jumble in the middle is your <b>Sheet ID</b> — select just that part (between <code class="inl">/d/</code> and <code class="inl">/edit</code>) and copy it somewhere safe. You'll need it in Step 7.</p>
+      <p>Look at the web address at the top of your browser. The long jumble in the middle is your <b>Sheet ID</b> — select just that part (between <code class="inl">/d/</code> and <code class="inl">/edit</code>) and copy it somewhere safe. You'll need it in Step 5.</p>
       <figure>
         <svg viewBox="0 0 640 90" role="img" aria-label="In the spreadsheet URL, the Sheet ID is the long segment between slash-d-slash and slash-edit.">
           <text x="10" y="34" font-family="ui-monospace,Menlo,Consolas,monospace" font-size="13.5">
@@ -271,33 +259,34 @@ details .body{padding:2px 16px 14px}
           <text class="svg-ink" x="364" y="82" text-anchor="middle" font-size="12" font-weight="700">this is your GOOGLE_SHEET_ID</text>
         </svg>
       </figure>
-      <p>Keep this sheet's browser tab open — you'll share it in Step 5.</p>
+      <p>Keep this sheet's browser tab open — you'll share it in Step 4.</p>
     </section>
 
-    <section id="s3">
-      <h2><span class="snum">3</span> Get a free AI key (Google Gemini)</h2>
+    <section id="s2">
+      <h2><span class="snum">2</span> Get a free AI key (Google Gemini)</h2>
       <p>This gives your app its brain for reading expenses.</p>
       <ol>
         <li>Go to <a href="https://aistudio.google.com">aistudio.google.com</a> and sign in with your Google account.</li>
-        <li>Click <b>"Get API key"</b> (a key icon in the left menu).</li>
-        <li>Click <b>"Create API key"</b>, then choose <b>"Create API key in new project"</b>.</li>
-        <li>A long key appears — it may start with <code class="inl">AIza</code> or <code class="inl">AQ.</code> (both are valid). Click <b>Copy</b> and save it. This is your <code class="inl">GEMINI_API_KEY</code>.</li>
+        <li>Tap <b>"Get API key"</b> (a key icon in the left menu — on a phone it may be under a ☰ menu first).</li>
+        <li>Tap <b>"Create API key"</b>, then choose <b>"Create API key in new project"</b>.</li>
+        <li>A long key appears — it may start with <code class="inl">AIza</code> or <code class="inl">AQ.</code> (both are valid). Tap <b>Copy</b> and save it. This is your <code class="inl">GEMINI_API_KEY</code>.</li>
       </ol>
       <div class="call warn"><span class="ic">🔑</span><div>Treat this key like a password — anyone with it can use your free AI quota.</div></div>
     </section>
 
-    <section id="s4">
-      <h2><span class="snum">4</span> Create a "robot" account for the sheet</h2>
-      <p>Your app can't log into Google as <i>you</i>. Instead it uses a <b>service account</b> — a robot identity allowed to write to just your one sheet. This looks technical but it's only clicking. Follow it exactly.</p>
+    <section id="s3">
+      <h2><span class="snum">3</span> Create a "robot" account for the sheet</h2>
+      <p>Your app can't log into Google as <i>you</i>. Instead it uses a <b>service account</b> — a robot identity allowed to write to just your one sheet. This looks technical but it's only tapping. Follow it exactly.</p>
       <ol>
         <li>Go to <a href="https://console.cloud.google.com">console.cloud.google.com</a> and sign in. If asked to accept terms, do so — you will <b>not</b> be charged and don't need any free trial.</li>
-        <li><b>Pick the right project.</b> At the very top, next to "Google Cloud", click the project dropdown and choose the project made in Step 3 (often named <i>"Gemini API"</i> or <i>"My First Project"</i>). Any project works.</li>
-        <li><b>Turn on the Sheets API:</b> in the top search bar type <code class="inl">Google Sheets API</code>, click the result, then click the blue <b>"Enable"</b> button.</li>
+        <li><b>Pick the right project.</b> At the very top, next to "Google Cloud", tap the project dropdown and choose the project made in Step 2 (often named <i>"Gemini API"</i> or <i>"My First Project"</i>). Any project works.</li>
+        <li><b>Turn on the Sheets API:</b> in the top search bar type <code class="inl">Google Sheets API</code>, tap the result, then tap the blue <b>"Enable"</b> button.</li>
         <li><b>Create the service account:</b> search <code class="inl">Service Accounts</code> (under "IAM &amp; Admin") → <b>"+ Create service account"</b> → name it <code class="inl">expense-bot</code> → <b>"Create and continue"</b> → <b>skip</b> the optional access steps → <b>"Continue"</b> → <b>"Done"</b>.</li>
-        <li><b>Create its key file:</b> click your new <code class="inl">expense-bot</code> account → the <b>"Keys"</b> tab → <b>"Add key" → "Create new key"</b> → choose <b>JSON</b> → <b>"Create"</b>. A <code class="inl">.json</code> file downloads.</li>
-        <li><b>Open that downloaded file</b> in any text editor (Notepad, TextEdit, or your browser). Find and copy these two values:</li>
+        <li><b>Create its key file:</b> tap your new <code class="inl">expense-bot</code> account → the <b>"Keys"</b> tab → <b>"Add key" → "Create new key"</b> → choose <b>JSON</b> → <b>"Create"</b>. A <code class="inl">.json</code> file downloads to your phone.</li>
+        <li><b>Open the downloaded file and copy two values out of it.</b> This is the fiddliest part on a phone — here's the easiest way:</li>
       </ol>
-      <div class="call danger"><span class="ic">🔒</span><div>That JSON file is like a password. Keep it private, and delete it once you've finished Step 7.</div></div>
+      <div class="call tip"><span class="ic">💡</span><div><b>Mobile tip:</b> tap the downloaded <code class="inl">.json</code> file (in your Downloads app or your browser's download tray) and open it with your browser or a notes app — most will just show the raw text. Then <b>select all and copy the whole file</b> into your notes app first. It's far easier to precisely select small pieces of text there than inside a cramped downloaded-file viewer.</div></div>
+      <div class="call danger"><span class="ic">🔒</span><div>That JSON file is like a password. Keep it private, and delete it once you've finished Step 5.</div></div>
       <figure>
         <svg viewBox="0 0 620 210" role="img" aria-label="The client_email field becomes GOOGLE_SERVICE_ACCOUNT_EMAIL and the private_key field becomes GOOGLE_PRIVATE_KEY. The sheet URL becomes GOOGLE_SHEET_ID and the Gemini key becomes GEMINI_API_KEY.">
           <rect class="svg-box" x="14" y="20" width="230" height="170" rx="12" stroke-width="1.5"/>
@@ -322,76 +311,66 @@ details .body{padding:2px 16px 14px}
             </marker>
           </defs>
         </svg>
-        <figcaption>Which value becomes which setting in Step 7. Keep this open as you go.</figcaption>
+        <figcaption>Which value becomes which setting in Step 5. Keep this open as you go.</figcaption>
       </figure>
       <ul>
         <li><code class="inl">"client_email"</code> — ends in <code class="inl">…iam.gserviceaccount.com</code> → your <code class="inl">GOOGLE_SERVICE_ACCOUNT_EMAIL</code>.</li>
-        <li><code class="inl">"private_key"</code> — a long block starting <code class="inl">-----BEGIN PRIVATE KEY-----</code>. Copy everything between the quotation marks, including the BEGIN/END lines → your <code class="inl">GOOGLE_PRIVATE_KEY</code>.</li>
+        <li><code class="inl">"private_key"</code> — a long block starting <code class="inl">-----BEGIN PRIVATE KEY-----</code>. Copy everything between the quotation marks, including the BEGIN/END lines → your <code class="inl">GOOGLE_PRIVATE_KEY</code>. It's fine that it's one long line with <code class="inl">\n</code> in it — paste it exactly as it appears.</li>
       </ul>
     </section>
 
-    <section id="s5">
-      <h2><span class="snum">5</span> Share your sheet with the robot</h2>
+    <section id="s4">
+      <h2><span class="snum">4</span> Share your sheet with the robot</h2>
       <p>The robot exists but can't see your sheet yet. Let's fix that.</p>
       <div class="call danger"><span class="ic">⚠️</span><div><b>This is the single most-forgotten step.</b> Skip it and the app can't save or read anything (you'll get a "permission denied" error).</div></div>
       <ol>
-        <li>Go back to your Google Sheet from Step 2.</li>
-        <li>Click the green <b>"Share"</b> button (top-right).</li>
+        <li>Go back to your Google Sheet from Step 1.</li>
+        <li>Tap the green <b>"Share"</b> button (top-right).</li>
         <li>Paste the robot's email — your <code class="inl">GOOGLE_SERVICE_ACCOUNT_EMAIL</code> ending in <code class="inl">…iam.gserviceaccount.com</code>.</li>
         <li>Set its role to <b>"Editor"</b> (not Viewer).</li>
         <li><b>Uncheck "Notify people"</b> — the robot has no inbox.</li>
-        <li>Click <b>"Share"</b> / <b>"Send"</b>.</li>
+        <li>Tap <b>"Share"</b> / <b>"Send"</b>.</li>
       </ol>
     </section>
 
-    <section id="s6">
-      <h2><span class="snum">6</span> Put the code on GitHub</h2>
-      <p>Upload this folder to GitHub so Vercel can find it — all in your browser.</p>
+    <section id="s5">
+      <h2><span class="snum">5</span> Deploy your app</h2>
+      <p>This is the step that puts your app online — no code, no uploads, no separate GitHub step. Tapping the button below asks Vercel to make you a personal copy of this code on your own GitHub account <i>and</i> deploy it, in one go.</p>
       <figure>
-        <svg viewBox="0 0 560 90" role="img" aria-label="You upload the folder to GitHub once; Vercel then builds and hosts it.">
-          <rect class="svg-box" x="10" y="24" width="150" height="46" rx="11" stroke-width="1.5"/>
-          <text class="svg-ink" x="85" y="52" text-anchor="middle" font-size="13" font-weight="700">🐙 GitHub</text>
-          <line class="svg-astroke" x1="160" y1="47" x2="228" y2="47" stroke-width="2" marker-end="url(#ar3)"/>
-          <text class="svg-mut" x="194" y="38" text-anchor="middle" font-size="10">imports</text>
-          <rect class="svg-accent" x="230" y="24" width="150" height="46" rx="11" stroke-width="1.5"/>
-          <text class="svg-ink" x="305" y="52" text-anchor="middle" font-size="13" font-weight="700">▲ Vercel</text>
-          <line class="svg-astroke" x1="380" y1="47" x2="448" y2="47" stroke-width="2" marker-end="url(#ar3)"/>
-          <text class="svg-mut" x="414" y="38" text-anchor="middle" font-size="10">builds</text>
+        <svg viewBox="0 0 560 90" role="img" aria-label="Tapping Deploy asks Vercel to create your GitHub copy and build it, resulting in a live app.">
+          <rect class="svg-accent" x="10" y="24" width="170" height="46" rx="11" stroke-width="1.5"/>
+          <text class="svg-ink" x="95" y="52" text-anchor="middle" font-size="13" font-weight="700">▲ Tap Deploy</text>
+          <line class="svg-astroke" x1="180" y1="47" x2="248" y2="47" stroke-width="2" marker-end="url(#ar3)"/>
+          <text class="svg-mut" x="214" y="38" text-anchor="middle" font-size="10">creates + builds</text>
+          <rect class="svg-box" x="250" y="24" width="150" height="46" rx="11" stroke-width="1.5"/>
+          <text class="svg-ink" x="325" y="45" text-anchor="middle" font-size="12" font-weight="700">🐙 Your GitHub copy</text>
+          <text class="svg-mut" x="325" y="60" text-anchor="middle" font-size="10">created automatically</text>
+          <line class="svg-astroke" x1="400" y1="47" x2="448" y2="47" stroke-width="2" marker-end="url(#ar3)"/>
           <rect class="svg-green" x="450" y="24" width="100" height="46" rx="11" stroke-width="1.5"/>
           <text class="svg-ink" x="500" y="52" text-anchor="middle" font-size="13" font-weight="700">🌐 Live</text>
           <defs><marker id="ar3" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 Z" fill="var(--accent)"/></marker></defs>
         </svg>
       </figure>
+      <p>Before you tap it, make sure you have your four values from Steps 1–3 handy (paste them into your notes app if you haven't already): <code class="inl">GOOGLE_SHEET_ID</code>, <code class="inl">GEMINI_API_KEY</code>, <code class="inl">GOOGLE_SERVICE_ACCOUNT_EMAIL</code>, <code class="inl">GOOGLE_PRIVATE_KEY</code>.</p>
+      <p style="text-align:center;margin:22px 0">
+        <a href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fdaleskyler777-lgtm%2Fmoney-tracker-template&env=APP_PIN%2CGEMINI_API_KEY%2CGOOGLE_SERVICE_ACCOUNT_EMAIL%2CGOOGLE_PRIVATE_KEY%2CGOOGLE_SHEET_ID%2CSHEET_NAME%2CPEOPLE&envDescription=Get%20these%20values%20from%20the%20setup%20guide%20in%20the%20README%20(Steps%201-3)&envLink=https%3A%2F%2Fgithub.com%2Fdaleskyler777-lgtm%2Fmoney-tracker-template%23environment-variables&project-name=money-tracker&repository-name=money-tracker">
+          <img src="https://vercel.com/button" alt="Deploy with Vercel" style="height:32px" />
+        </a>
+      </p>
       <ol>
-        <li>Go to <a href="https://github.com/new">github.com/new</a> (sign in if needed).</li>
-        <li><b>Repository name:</b> <code class="inl">money-tracker</code>.</li>
-        <li>Set it to <b>Private</b>.</li>
-        <li><b>Leave every other box unchecked</b> (no README, no .gitignore, no license) — the upload needs an empty repository.</li>
-        <li>Click <b>"Create repository"</b>.</li>
-        <li>On the next page, click the small link <b>"uploading an existing file"</b>.</li>
-        <li>Open your <code class="inl">money-tracker</code> folder, select <b>everything inside it</b> (<kbd>Ctrl</kbd>/<kbd>Cmd</kbd>+<kbd>A</kbd>) — the <code class="inl">app</code>, <code class="inl">lib</code>, <code class="inl">scripts</code> folders and the loose files — and <b>drag them all</b> onto the upload area.</li>
-        <li>Scroll down and click the green <b>"Commit changes"</b>.</li>
-      </ol>
-      <div class="call tip"><span class="ic">💡</span><div>Give the upload a moment — it keeps the folder structure. You should see <code class="inl">app/</code>, <code class="inl">lib/</code>, <code class="inl">scripts/</code>, and <code class="inl">package.json</code> in the list. The tutorial files ride along harmlessly.</div></div>
-    </section>
-
-    <section id="s7">
-      <h2><span class="snum">7</span> Put it online with Vercel</h2>
-      <p>Now it becomes a real, live website.</p>
-      <ol>
-        <li>Go to <a href="https://vercel.com/new">vercel.com/new</a>. Sign in with <b>"Continue with GitHub"</b>, same account as Step 6.</li>
-        <li>Find <code class="inl">money-tracker</code> in your repo list and click <b>"Import"</b>. (Not listed? Click "Adjust GitHub App Permissions" and grant access.)</li>
-        <li><b>Before clicking Deploy</b>, expand <b>"Environment Variables"</b> and add each row below — type the <b>Name</b>, paste the <b>Value</b>, click Add, repeat.</li>
+        <li><b>Sign in with GitHub</b> if asked (same account from "Before you start").</li>
+        <li>Vercel offers to create a new repository for your copy of the code — the name is prefilled, you can leave it as-is. Confirm it.</li>
+        <li>You'll land on a <b>"Configure Project"</b> screen with an <b>Environment Variables</b> section, already listing the names below. Tap each field and paste the matching value.</li>
       </ol>
       <div class="tablewrap">
         <table class="env">
-          <thead><tr><th>Name (click to copy)</th><th>Value — where it comes from</th></tr></thead>
+          <thead><tr><th>Name (tap to copy)</th><th>Value — where it comes from</th></tr></thead>
           <tbody>
             <tr><td class="name"><span class="varchip"><code>APP_PIN</code><button class="minicopy" data-text="APP_PIN">copy</button></span></td><td>A number <i>you</i> pick, e.g. <code class="inl">2468</code>. The PIN you'll both type to open the app.</td></tr>
-            <tr><td class="name"><span class="varchip"><code>GEMINI_API_KEY</code><button class="minicopy" data-text="GEMINI_API_KEY">copy</button></span></td><td>The key from <b>Step 3</b> (it may start with <code class="inl">AIza</code> or <code class="inl">AQ.</code>).</td></tr>
-            <tr><td class="name"><span class="varchip"><code>GOOGLE_SERVICE_ACCOUNT_EMAIL</code><button class="minicopy" data-text="GOOGLE_SERVICE_ACCOUNT_EMAIL">copy</button></span></td><td>The <code class="inl">…iam.gserviceaccount.com</code> email from <b>Step 4</b>.</td></tr>
-            <tr><td class="name"><span class="varchip"><code>GOOGLE_PRIVATE_KEY</code><button class="minicopy" data-text="GOOGLE_PRIVATE_KEY">copy</button></span></td><td>The long <code class="inl">-----BEGIN PRIVATE KEY-----…</code> block from <b>Step 4</b>. Paste exactly as-is (multiple lines are fine).</td></tr>
-            <tr><td class="name"><span class="varchip"><code>GOOGLE_SHEET_ID</code><button class="minicopy" data-text="GOOGLE_SHEET_ID">copy</button></span></td><td>The long ID from your sheet's URL, <b>Step 2</b>.</td></tr>
+            <tr><td class="name"><span class="varchip"><code>GEMINI_API_KEY</code><button class="minicopy" data-text="GEMINI_API_KEY">copy</button></span></td><td>The key from <b>Step 2</b> (it may start with <code class="inl">AIza</code> or <code class="inl">AQ.</code>).</td></tr>
+            <tr><td class="name"><span class="varchip"><code>GOOGLE_SERVICE_ACCOUNT_EMAIL</code><button class="minicopy" data-text="GOOGLE_SERVICE_ACCOUNT_EMAIL">copy</button></span></td><td>The <code class="inl">…iam.gserviceaccount.com</code> email from <b>Step 3</b>.</td></tr>
+            <tr><td class="name"><span class="varchip"><code>GOOGLE_PRIVATE_KEY</code><button class="minicopy" data-text="GOOGLE_PRIVATE_KEY">copy</button></span></td><td>The long <code class="inl">-----BEGIN PRIVATE KEY-----…</code> block from <b>Step 3</b>. Paste exactly as-is (multiple lines, or one long line with <code class="inl">\n</code>, are both fine).</td></tr>
+            <tr><td class="name"><span class="varchip"><code>GOOGLE_SHEET_ID</code><button class="minicopy" data-text="GOOGLE_SHEET_ID">copy</button></span></td><td>The long ID from your sheet's URL, <b>Step 1</b>.</td></tr>
             <tr><td class="name"><span class="varchip"><code>SHEET_NAME</code><button class="minicopy" data-text="SHEET_NAME">copy</button></span></td><td><code class="inl">Sheet1</code> — the tab name at the bottom-left of your sheet. Leave as <code class="inl">Sheet1</code> unless you renamed the tab.</td></tr>
             <tr><td class="name"><span class="varchip"><code>PEOPLE</code><button class="minicopy" data-text="PEOPLE">copy</button></span></td><td>Everyone's names, separated by commas — e.g. <code class="inl">Alex,Sam</code> or <code class="inl">Alex,Sam,Jordan</code>. <b>Add as many as you like</b>; the first name is the default.</td></tr>
           </tbody>
@@ -399,13 +378,19 @@ details .body{padding:2px 16px 14px}
       </div>
       <div class="call tip"><span class="ic">💡</span><div>You can skip <code class="inl">GEMINI_MODEL</code> — the app defaults to <code class="inl">gemini-2.5-flash</code>, which is free and fast.</div></div>
       <ol start="4">
-        <li>Once they're all added, click the big <b>"Deploy"</b> button.</li>
-        <li>Wait 1–2 minutes. When it's done you'll see confetti 🎉 and a link like <code class="inl">money-tracker-xxxx.vercel.app</code>. Click <b>"Continue to Dashboard"</b> — your link is shown under <b>"Domains"</b>.</li>
+        <li>Once they're all filled in, tap the big <b>"Deploy"</b> button.</li>
+        <li>Wait 1–2 minutes. When it's done you'll see confetti 🎉 and a link like <code class="inl">money-tracker-xxxx.vercel.app</code>. Tap <b>"Continue to Dashboard"</b> — your link is shown under <b>"Domains"</b>.</li>
       </ol>
+      <details>
+        <summary>Prefer to review the code on GitHub first, or use it without the Deploy button?</summary>
+        <div class="body">
+          <p>You can also tap <b>"Use this template"</b> on the <a href="https://github.com/daleskyler777-lgtm/money-tracker-template">template repository</a> to create your own copy on GitHub first, then go to <a href="https://vercel.com/new">vercel.com/new</a>, import that new repository, and fill in the same environment variables from the table above before deploying.</p>
+        </div>
+      </details>
     </section>
 
-    <section id="s8">
-      <h2><span class="snum">8</span> Open it and share it</h2>
+    <section id="s6">
+      <h2><span class="snum">6</span> Open it and share it</h2>
       <ol>
         <li>Open your <code class="inl">…vercel.app</code> link — on your computer or straight on your phone.</li>
         <li>Type the <b>PIN</b> you chose (<code class="inl">APP_PIN</code>) and tap <b>Unlock</b>.</li>
@@ -426,11 +411,11 @@ details .body{padding:2px 16px 14px}
           <table class="tb">
             <thead><tr><th>What you see</th><th>Fix</th></tr></thead>
             <tbody>
-              <tr><td><b>"permission denied" / 403</b></td><td>The sheet isn't shared with the robot. Redo <b>Step 5</b> (share as <b>Editor</b>). Also confirm the Sheets API is enabled (<b>Step 4.3</b>).</td></tr>
+              <tr><td><b>"permission denied" / 403</b></td><td>The sheet isn't shared with the robot. Redo <b>Step 4</b> (share as <b>Editor</b>). Also confirm the Sheets API is enabled (<b>Step 3.3</b>).</td></tr>
               <tr><td><b>"private key" / "not a valid private key"</b></td><td>The <code class="inl">GOOGLE_PRIVATE_KEY</code> got mangled. In Vercel → Settings → Environment Variables, re-paste the whole block including the BEGIN/END lines, then redeploy.</td></tr>
-              <tr><td><b>"Spreadsheet not found" / 404</b></td><td>Wrong <code class="inl">GOOGLE_SHEET_ID</code>. Recopy just the middle of the sheet URL (<b>Step 2</b>), update Vercel, redeploy.</td></tr>
+              <tr><td><b>"Spreadsheet not found" / 404</b></td><td>Wrong <code class="inl">GOOGLE_SHEET_ID</code>. Recopy just the middle of the sheet URL (<b>Step 1</b>), update Vercel, redeploy.</td></tr>
               <tr><td><b>"rate limit" / 429</b></td><td>Hit Gemini's free per-minute limit. Wait a minute and try again.</td></tr>
-              <tr><td><b>Totals show $0 / empty</b></td><td>Make sure row 1 is the headers (<b>Step 2</b>) and expenses are below. The summary only counts the <b>current month</b> (Pacific time).</td></tr>
+              <tr><td><b>Totals show $0 / empty</b></td><td>Make sure row 1 is the headers (<b>Step 1</b>) and expenses are below. The summary only counts the <b>current month</b> (Pacific time).</td></tr>
               <tr><td><b>Shows "Alex / Sam"</b></td><td>You didn't set <code class="inl">PEOPLE</code> in Vercel, or misspelled it. Fix (comma-separated names) and redeploy.</td></tr>
               <tr><td><b>"Wrong PIN" but it's right</b></td><td>Check <code class="inl">APP_PIN</code> in Vercel for stray spaces. Env changes need a redeploy.</td></tr>
             </tbody>
@@ -457,7 +442,7 @@ details .body{padding:2px 16px 14px}
           <p><i>You don't need this for the steps above.</i> If you're comfortable with a terminal:</p>
           <ol>
             <li>Install <a href="https://nodejs.org">Node.js</a> (version 20+).</li>
-            <li>Copy <code class="inl">.env.example</code> to a new file named <code class="inl">.env.local</code> and fill in the same values from Step 7.</li>
+            <li>Copy <code class="inl">.env.example</code> to a new file named <code class="inl">.env.local</code> and fill in the same values from Step 5.</li>
             <li>Run <code class="inl">npm install</code>, then <code class="inl">npm run setup:sheet</code> (writes the header row for you), then <code class="inl">npm run dev</code>, and open <code class="inl">http://localhost:3000</code>.</li>
           </ol>
         </div>

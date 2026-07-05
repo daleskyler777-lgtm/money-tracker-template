@@ -5,14 +5,15 @@ plain English (*"$43 Costco groceries"*) or snap a photo of a receipt — an AI 
 it, and it gets saved as a row in a Google Sheet you all share. There's a "This
 Month" summary showing totals per person and per category.
 
-This guide takes you from an empty folder to a live app on the internet **without
-writing a single line of code and without installing anything** on your computer.
-Everything is done through websites.
+This guide takes you from nothing to a live app on the internet **without writing
+a single line of code and without installing anything** — and it works entirely
+from your phone. Everything is done through websites and one tap of a "Deploy"
+button.
 
 > 📖 **Prefer a nicer, click-through version?** Open **`START-HERE.html`** (in this
-> same folder) by double-clicking it — it opens in your web browser with the exact
-> same steps, copy buttons, and diagrams. This README has all the same content in
-> case you're reading on GitHub.
+> same folder, or [view it online](https://raw.githack.com/daleskyler777-lgtm/money-tracker-template/main/START-HERE.html))
+> — it has the exact same steps, copy buttons, and diagrams. This README has all
+> the same content in case you're reading on GitHub.
 
 ---
 
@@ -55,8 +56,8 @@ When you type an expense and tap the button, here's the journey:
 
 You never see any of this — you just type and tap. But it explains the accounts
 you're about to create: one gives the app an **AI brain** (Gemini), one gives it a
-**notebook to write in** (Google Sheets), and the last two get it **online**
-(GitHub + Vercel).
+**notebook to write in** (Google Sheets), and the last one gets it **online**
+(Vercel, which creates your GitHub copy for you automatically).
 
 ---
 
@@ -64,7 +65,7 @@ you're about to create: one gives the app an **AI brain** (Gemini), one gives it
 
 | | |
 |---|---|
-| ⏱️ **Time** | About 30–45 minutes, mostly clicking through account setup. |
+| ⏱️ **Time** | About 20–30 minutes, mostly clicking through account setup. |
 | 💵 **Cost** | **Free.** Every service here has a free tier that's way more than enough for two people logging expenses. No credit card required. |
 | 🔒 **Security** | The app is protected by a **shared PIN**. That's fine for a personal expense app between two people, but it is *convenience-level* security — don't reuse an important PIN, and don't store anything sensitive. |
 | 🤖 **Privacy** | Your expense text and receipt photos are sent to Google's Gemini AI to be read. On the **free tier, Google may use that data to improve their models.** Receipt photos are never saved by the app itself — they're read once and discarded. |
@@ -72,36 +73,24 @@ you're about to create: one gives the app an **AI brain** (Gemini), one gives it
 ### Accounts you'll need (all free)
 
 - [ ] A **Google account** (you almost certainly have one — Gmail counts). This single account covers the AI key, the sheet, and the robot login.
-- [ ] A **GitHub account** — a free home for the code. Sign up at [github.com](https://github.com).
-- [ ] A **Vercel account** — the free host that puts your app online. Sign up at [vercel.com](https://vercel.com) using your GitHub account (one click).
+- [ ] A **GitHub account** — sign up at [github.com](https://github.com) (you can do this from your phone's browser). You don't need to know Git or upload any files — Vercel creates your copy of the code for you in Step 5.
+- [ ] A **Vercel account** — the free host that puts your app online. Sign up at [vercel.com](https://vercel.com) using your GitHub account (one tap).
 
 Create the GitHub and Vercel accounts now if you don't have them, then come back.
 
----
-
-## Step 1 — Unzip this folder
-
-If you're reading this, you may have already done it! You should have a folder called
-**`money-tracker`** containing files like `package.json`, and folders named `app`,
-`lib`, and `scripts`.
-
-- Put this folder somewhere you won't lose it, like your Desktop.
-- **Don't rename or delete anything inside it** — you'll upload the whole folder to
-  GitHub in Step 6.
-
-That's it. You don't need to open any of these files.
+> 💡 **The short version:** collect four things below (a Sheet ID, an AI key, and two values from a "robot" account), then tap one **Deploy** button in Step 5 and paste them in. That's the whole setup.
 
 ---
 
-## Step 2 — Create your Google Sheet
+## Step 1 — Create your Google Sheet
 
 This is where your expenses will be stored.
 
 1. Go to **[sheets.new](https://sheets.new)** (this instantly creates a new blank
-   Google Sheet).
-2. Give it a name — click **"Untitled spreadsheet"** at the top-left and type
+   Google Sheet). Works fine in your phone's browser.
+2. Give it a name — tap **"Untitled spreadsheet"** at the top-left and type
    something like `Expenses`.
-3. **Add the header row.** Click on the very first cell, **A1**, and paste this exact
+3. **Add the header row.** Tap the very first cell, **A1**, and paste this exact
    line (it will automatically spread across the first six cells):
 
    ```
@@ -110,8 +99,8 @@ This is where your expenses will be stored.
 
    > 💡 The gaps between the words are **Tab** characters. Copy the whole line above
    > and paste it into cell **A1** — Google Sheets fills A1 through F1 for you. If it
-   > all lands in one cell, undo (Ctrl/Cmd+Z) and instead type each word into cells
-   > A1, B1, C1, D1, E1, F1 by pressing **Tab** between them.
+   > all lands in one cell, undo and instead type each word into cells
+   > A1, B1, C1, D1, E1, F1 with **Tab** between them.
 
    Your top row should read: **Date | Person | Amount | Merchant | Category | Notes**
 
@@ -124,162 +113,170 @@ This is where your expenses will be stored.
    ```
 
    Select just that middle part (between `/d/` and `/edit`) and copy it. Paste it into
-   a notes file for now — you'll need it in Step 7. We'll call it **`GOOGLE_SHEET_ID`**.
+   a notes app for now — you'll need it in Step 5. We'll call it **`GOOGLE_SHEET_ID`**.
 
-Leave this sheet open; you'll share it in Step 5.
+Leave this sheet open (or its tab open); you'll share it in Step 4.
 
 ---
 
-## Step 3 — Get a free AI key (Google Gemini)
+## Step 2 — Get a free AI key (Google Gemini)
 
 This gives your app its brain for reading expenses.
 
 1. Go to **[aistudio.google.com](https://aistudio.google.com)** and sign in with your
    Google account.
-2. Click **"Get API key"** (a key icon, in the left-hand menu).
-3. Click **"Create API key"**, then choose **"Create API key in new project"**.
+2. Tap **"Get API key"** (a key icon, in the left-hand menu — on a phone this may be
+   under a ☰ menu button first).
+3. Tap **"Create API key"**, then choose **"Create API key in new project"**.
 4. A long key appears — it may start with **`AIza`** or **`AQ.`** (both are valid
-   formats). Click **Copy** and paste it into your notes file. We'll call it
+   formats). Tap **Copy** and paste it into your notes app. We'll call it
    **`GEMINI_API_KEY`**.
 
 > 💡 Treat this key like a password — anyone with it can use your free AI quota.
 
 ---
 
-## Step 4 — Create a "robot" account for the sheet (Google Cloud)
+## Step 3 — Create a "robot" account for the sheet (Google Cloud)
 
 Your app can't log into Google as *you*. Instead it uses a **service account** — a
 robot identity that's allowed to write to just your one sheet. This is the most
-technical-looking step, but it's only clicking. Follow along exactly.
+technical-looking step, but it's only tapping. Follow along exactly.
 
 1. Go to **[console.cloud.google.com](https://console.cloud.google.com)** and sign in.
    - If it asks you to agree to terms, do so. You will **not** be charged and don't
      need to start any free trial.
 2. **Select the right project.** At the very top, next to "Google Cloud", there's a
-   project name dropdown. Click it and pick the project that was created in Step 3
+   project name dropdown. Tap it and pick the project that was created in Step 2
    (it may be called something like *"Gemini API"* or *"My First Project"*). Any
    project works, but using the same one keeps things tidy.
 3. **Turn on the Sheets API:**
-   - In the search bar at the top, type **`Google Sheets API`** and click the result.
-   - Click the blue **"Enable"** button. Wait a few seconds for it to finish.
+   - In the search bar at the top, type **`Google Sheets API`** and tap the result.
+   - Tap the blue **"Enable"** button. Wait a few seconds for it to finish.
 4. **Create the service account:**
-   - In the top search bar, type **`Service Accounts`** and click the result (under
+   - In the top search bar, type **`Service Accounts`** and tap the result (under
      "IAM & Admin").
-   - Click **"+ Create service account"** near the top.
-   - **Service account name:** type `expense-bot`. Click **"Create and continue"**.
+   - Tap **"+ Create service account"** near the top.
+   - **Service account name:** type `expense-bot`. Tap **"Create and continue"**.
    - It now asks to "Grant this service account access to project" — **skip this**.
-     Click **"Continue"**, then **"Done"**. (It needs no project roles; it gets
+     Tap **"Continue"**, then **"Done"**. (It needs no project roles; it gets
      access by being shared on your sheet in the next step.)
 5. **Create its key file:**
-   - You're back on the Service Accounts list. Click the one you just made
+   - You're back on the Service Accounts list. Tap the one you just made
      (`expense-bot@...`).
-   - Click the **"Keys"** tab near the top.
-   - Click **"Add key" → "Create new key"**.
-   - Choose **JSON**, then click **"Create"**.
-   - A file downloads to your computer (something like
+   - Tap the **"Keys"** tab near the top.
+   - Tap **"Add key" → "Create new key"**.
+   - Choose **JSON**, then tap **"Create"**.
+   - A file downloads to your phone (something like
      `expense-bot-abc123.json`). **This file is like a password — keep it safe and
      delete it once you're done.**
-6. **Open that downloaded file** with any text editor (double-click it; if asked what
-   to open it with, choose Notepad, TextEdit, or your browser). Inside you'll find two
-   things you need. Copy each into your notes file:
-   - **`"client_email"`** — an address ending in `...iam.gserviceaccount.com`. We'll
-     call this **`GOOGLE_SERVICE_ACCOUNT_EMAIL`**.
-   - **`"private_key"`** — a very long block starting with
-     `-----BEGIN PRIVATE KEY-----`. Copy **everything between the quotation marks**,
-     including the `BEGIN`/`END` lines. We'll call this **`GOOGLE_PRIVATE_KEY`**.
+6. **Open the downloaded file and copy two values out of it.** This is the fiddliest
+   part on a phone, so here's the easiest way:
+   - Tap the downloaded `.json` file (in your Downloads app, or the notification/
+     download tray your browser shows). Choose **"Open with"** your browser
+     (Chrome/Safari) or a plain-text/notes app — most phone browsers will just show
+     you the raw text of the file.
+   - **Select all the text** and copy the *whole file* into your notes app first.
+     It's much easier to precisely select small pieces of text there than inside a
+     cramped downloaded-file viewer.
+   - From the pasted text in your notes app, copy out:
+     - **`"client_email"`** — an address ending in `...iam.gserviceaccount.com`. We'll
+       call this **`GOOGLE_SERVICE_ACCOUNT_EMAIL`**.
+     - **`"private_key"`** — a long block starting with
+       `-----BEGIN PRIVATE KEY-----`. Copy **everything between the quotation marks**,
+       including the `BEGIN`/`END` lines. We'll call this **`GOOGLE_PRIVATE_KEY`**.
+       It's fine that it's one very long line with `\n` in it — paste it exactly as
+       it appears, quotes and all removed, `\n`'s kept.
 
-### Where each value goes (keep this handy for Step 7)
+### Where each value goes (keep this handy for Step 5)
 
 ```
-  Downloaded JSON file                Environment variable (Step 7)
+  Downloaded JSON file                Environment variable (Step 5)
   ────────────────────                ─────────────────────────────
   "client_email":  ────────────────▶  GOOGLE_SERVICE_ACCOUNT_EMAIL
   "private_key":   ────────────────▶  GOOGLE_PRIVATE_KEY
 
-  Google Sheet URL  ───────────────▶  GOOGLE_SHEET_ID   (from Step 2)
-  Gemini API key    ───────────────▶  GEMINI_API_KEY    (from Step 3)
+  Google Sheet URL  ───────────────▶  GOOGLE_SHEET_ID   (from Step 1)
+  Gemini API key    ───────────────▶  GEMINI_API_KEY    (from Step 2)
 ```
 
 ---
 
-## Step 5 — Share your sheet with the robot
+## Step 4 — Share your sheet with the robot
 
 Right now the robot exists but can't see your sheet. Let's fix that. **This is the
 single most-forgotten step — skip it and the app can't save anything.**
 
-1. Go back to your Google Sheet from Step 2.
-2. Click the green **"Share"** button (top-right).
+1. Go back to your Google Sheet from Step 1.
+2. Tap the green **"Share"** button (top-right).
 3. In the "Add people" box, paste the robot's email — the
    **`GOOGLE_SERVICE_ACCOUNT_EMAIL`** ending in `...iam.gserviceaccount.com`.
 4. Make sure its role is set to **"Editor"** (not just Viewer).
 5. **Uncheck "Notify people"** (the robot has no inbox).
-6. Click **"Share"** / **"Send"**.
+6. Tap **"Share"** / **"Send"**.
 
 Done. The robot can now write to your sheet.
 
 ---
 
-## Step 6 — Put the code on GitHub
+## Step 5 — Deploy your app
 
-We'll upload this folder to GitHub so Vercel can find it. All in the browser.
+This is the step that puts your app online — no code, no uploads, no separate
+GitHub step. Tapping the button below asks Vercel to make you a personal copy of
+this code on your own GitHub account *and* deploy it in one go.
 
-1. Go to **[github.com/new](https://github.com/new)** (sign in if needed).
-2. **Repository name:** type `money-tracker`.
-3. Set it to **Private** (recommended — only you can see it).
-4. **Leave every other box unchecked** (no README, no .gitignore, no license). The
-   upload needs an empty repository.
-5. Click **"Create repository"**.
-6. On the next page, find the line of small text that says
-   **"uploading an existing file"** and click it.
-7. **Open your `money-tracker` folder** on your computer. Select **everything inside
-   it** (Ctrl+A / Cmd+A) — the `app`, `lib`, `scripts` folders and all the loose files
-   like `package.json`. **Drag them all** onto the GitHub page's upload area.
-   - ⏳ Give it a moment — it uploads the folders too, keeping their structure.
-   - ✅ You should see `app/`, `lib/`, `scripts/`, `package.json`, and the rest listed.
-8. Scroll down and click the green **"Commit changes"** button.
+Before you tap it, make sure you have your four values from Steps 1–3 handy
+(paste them into your notes app if you haven't already):
 
-Your code now lives on GitHub. (The `START-HERE.html` and `README.md` files ride along
-too — that's harmless, they don't affect the app.)
+- `GOOGLE_SHEET_ID`
+- `GEMINI_API_KEY`
+- `GOOGLE_SERVICE_ACCOUNT_EMAIL`
+- `GOOGLE_PRIVATE_KEY`
 
----
+Now tap:
 
-## Step 7 — Put it online with Vercel
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fdaleskyler777-lgtm%2Fmoney-tracker-template&env=APP_PIN%2CGEMINI_API_KEY%2CGOOGLE_SERVICE_ACCOUNT_EMAIL%2CGOOGLE_PRIVATE_KEY%2CGOOGLE_SHEET_ID%2CSHEET_NAME%2CPEOPLE&envDescription=Get%20these%20values%20from%20the%20setup%20guide%20in%20the%20README%20(Steps%201-3)&envLink=https%3A%2F%2Fgithub.com%2Fdaleskyler777-lgtm%2Fmoney-tracker-template%23environment-variables&project-name=money-tracker&repository-name=money-tracker)
 
-This is where it becomes a real, live website.
+1. **Sign in with GitHub** if asked (same account from "Before you start").
+2. Vercel offers to create a new repository for your copy of the code — the name
+   is prefilled, you can leave it as-is. Confirm it.
+3. You'll land on a **"Configure Project"** screen with an **Environment Variables**
+   section, already listing the names below. Tap each field and paste the matching
+   value:
 
-1. Go to **[vercel.com/new](https://vercel.com/new)**. Sign in — choose
-   **"Continue with GitHub"** and use the same GitHub account from Step 6.
-2. You'll see a list of your GitHub repositories. Find **`money-tracker`** and click
-   **"Import"**.
-   - If it's not listed, click **"Adjust GitHub App Permissions"** and give Vercel
-     access to the repo, then come back.
-3. **Before clicking Deploy**, expand the **"Environment Variables"** section. Add each
-   row from the table below — type the **Name** on the left, paste the **Value** on the
-   right, click **Add**, and repeat.
-
-### The environment variables
+### Environment Variables
 
 | Name | Value — where it comes from |
 |---|---|
 | `APP_PIN` | A number *you* pick, e.g. `2468`. This is the PIN you'll both type to open the app. |
-| `GEMINI_API_KEY` | The key from **Step 3** (it may start with `AIza` or `AQ.`). |
-| `GOOGLE_SERVICE_ACCOUNT_EMAIL` | The `…iam.gserviceaccount.com` email from **Step 4**. |
-| `GOOGLE_PRIVATE_KEY` | The long `-----BEGIN PRIVATE KEY-----…` block from **Step 4**. Paste it exactly as-is (it's fine if it's multiple lines). |
-| `GOOGLE_SHEET_ID` | The long ID from your sheet's URL, **Step 2**. |
+| `GEMINI_API_KEY` | The key from **Step 2** (it may start with `AIza` or `AQ.`). |
+| `GOOGLE_SERVICE_ACCOUNT_EMAIL` | The `…iam.gserviceaccount.com` email from **Step 3**. |
+| `GOOGLE_PRIVATE_KEY` | The long `-----BEGIN PRIVATE KEY-----…` block from **Step 3**. Paste it exactly as-is (it's fine if it's multiple lines, or one long line with `\n` in it). |
+| `GOOGLE_SHEET_ID` | The long ID from your sheet's URL, **Step 1**. |
 | `SHEET_NAME` | `Sheet1` (this is the tab name at the bottom-left of your sheet — leave it as `Sheet1` unless you renamed the tab). |
 | `PEOPLE` | Everyone's names, separated by commas — e.g. `Alex,Sam` or `Alex,Sam,Jordan`. **Add as many people as you like.** The first name is the default selection. |
 
 > 💡 You can leave out `GEMINI_MODEL` — the app defaults to `gemini-2.5-flash`, which
 > is free and fast.
 
-4. Once they're all added, click the big **"Deploy"** button.
+4. Once they're all filled in, tap the big **"Deploy"** button.
 5. Wait 1–2 minutes while Vercel builds it. When it's done you'll see confetti 🎉 and a
-   link like **`money-tracker-xxxx.vercel.app`**. Click **"Continue to Dashboard"**,
+   link like **`money-tracker-xxxx.vercel.app`**. Tap **"Continue to Dashboard"**,
    and your link is shown under **"Domains"**.
+
+<details>
+<summary>Prefer to review the code on GitHub first, or use it without the Deploy button?</summary>
+
+You can also tap **"Use this template"** on the
+[template repository](https://github.com/daleskyler777-lgtm/money-tracker-template)
+to create your own copy on GitHub first, then go to
+[vercel.com/new](https://vercel.com/new), import that new repository, and fill in
+the same environment variables from the table above before deploying.
+
+</details>
 
 ---
 
-## Step 8 — Open it and share it
+## Step 6 — Open it and share it
 
 1. Open your `…vercel.app` link — on your computer or straight on your phone.
 2. Type the **PIN** you chose (`APP_PIN`) and tap **Unlock**.
@@ -293,7 +290,7 @@ This is where it becomes a real, live website.
 6. **Send the link and PIN** to the other person so they can do the same. They just tap
    *their* name once.
 
-🎉 **You're done.** You built and shipped a real web app.
+🎉 **You're done.** You built and shipped a real web app, entirely from your phone.
 
 ---
 
@@ -303,17 +300,17 @@ If something's off, the app usually tells you what's wrong in a red box. Match i
 
 | What you see | What it means & how to fix it |
 |---|---|
-| **"permission denied" / 403** when logging or loading totals | The sheet isn't shared with the robot. Redo **Step 5** — share the sheet with the `…iam.gserviceaccount.com` email as **Editor**. Also make sure the Sheets API is enabled (**Step 4.3**). |
+| **"permission denied" / 403** when logging or loading totals | The sheet isn't shared with the robot. Redo **Step 4** — share the sheet with the `…iam.gserviceaccount.com` email as **Editor**. Also make sure the Sheets API is enabled (**Step 3.3**). |
 | **"private key" / "doesn't look like a valid private key"** | The `GOOGLE_PRIVATE_KEY` got mangled. In Vercel → **Settings → Environment Variables**, edit it and re-paste the whole block from the JSON file, including the `-----BEGIN`/`END-----` lines. Then redeploy (see below). |
-| **"Spreadsheet not found" / 404** | The `GOOGLE_SHEET_ID` is wrong. Recopy just the long middle part of the sheet URL (**Step 2.4**) into Vercel and redeploy. |
+| **"Spreadsheet not found" / 404** | The `GOOGLE_SHEET_ID` is wrong. Recopy just the long middle part of the sheet URL (**Step 1.4**) into Vercel and redeploy. |
 | **"rate limit" / 429** | You've hit Gemini's free per-minute limit. Wait a minute and try again. |
-| **Totals say $0 or look empty** | Make sure your sheet's first row is the headers (**Step 2.3**) and your expenses are on the rows below. The summary only counts the **current month** (Pacific time). |
+| **Totals say $0 or look empty** | Make sure your sheet's first row is the headers (**Step 1.3**) and your expenses are on the rows below. The summary only counts the **current month** (Pacific time). |
 | **App shows "Alex / Sam" instead of your names** | You didn't set `PEOPLE` in Vercel, or misspelled it. Add/fix it (comma-separated names) and redeploy. |
 | **Wrong PIN** even though it's right | Check `APP_PIN` in Vercel has no extra spaces. Env-var changes only take effect after a redeploy. |
 
 ### How to redeploy after changing an environment variable
 
-In Vercel: open your project → **Deployments** tab → click the **⋯** menu on the top
+In Vercel: open your project → **Deployments** tab → tap the **⋯** menu on the top
 (most recent) deployment → **Redeploy**. Env-var changes only apply to new deployments.
 
 ---
@@ -341,10 +338,12 @@ discarded. Only the resulting text (amount, store, etc.) is saved to your sheet.
 *You do not need this for the steps above.* If you're comfortable with a terminal and
 want to run it locally or auto-create the sheet headers with a script:
 
-1. Install [Node.js](https://nodejs.org) (version 20 or newer).
-2. In this folder, copy `.env.example` to a new file named `.env.local` and fill in the
-   same values from Step 7.
-3. Run `npm install`, then `npm run setup:sheet` (writes and formats the header row for
+1. Tap **"Use this template"** on the [template repository](https://github.com/daleskyler777-lgtm/money-tracker-template),
+   or clone your deployed copy from GitHub.
+2. Install [Node.js](https://nodejs.org) (version 20 or newer).
+3. In this folder, copy `.env.example` to a new file named `.env.local` and fill in the
+   same values from Step 5.
+4. Run `npm install`, then `npm run setup:sheet` (writes and formats the header row for
    you), then `npm run dev`, and open `http://localhost:3000`.
 
 ---
